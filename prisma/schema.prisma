@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Team      Team?     @relation(fields: [teamId], references: [id])
+  teamId    Int?
+}
+
+model Stadium {
+  id        Int      @id @default(autoincrement())
+  name      String
+  location  Json
+  capacity  Int
+  team      Team[]
+  matches   Match[]
+  createdAt DateTime @default(now())
+}
+
+model Match {
+  id               Int              @id @default(autoincrement())
+  name             String
+  date             DateTime
+  stadiumId        Int
+  stadium          Stadium          @relation(fields: [stadiumId], references: [id])
+  team1            Team             @relation("Team1", fields: [team1Id], references: [id])
+  team1Id          Int
+  team2            Team             @relation("Team2", fields: [team2Id], references: [id])
+  team2Id          Int
+  ticketCategories TicketCategory[]
+  mainEvent        Boolean          @default(false)
+  createdAt        DateTime         @default(now())
+  Booking          Booking[]
+}
+
+model Booking {
+  id         Int            @id @default(autoincrement())
+  userId     Int
+  user       User           @relation(fields: [userId], references: [id])
+  matchId    Int
+  match      Match          @relation(fields: [matchId], references: [id])
+  createdAt  DateTime       @default(now())
+  category   TicketCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@unique([userId, matchId, categoryId])
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image     String
+  matches1  Match[]  @relation("Team1")
+  matches2  Match[]  @relation("Team2")
+  createdAt DateTime @default(now())
+  Stadium   Stadium? @relation(fields: [stadiumId], references: [id])
+  stadiumId Int?
+  country   String
+  user      User[]
+}
+
+model TicketCategory {
+  id               Int                @id @default(autoincrement())
+  matchId          Int
+  match            Match              @relation(fields: [matchId], references: [id])
+  category         TicketCategoryEnum
+  ticketsAvailable Int
+  price            Float
+  gate             String
+  Booking          Booking[]
+  createdAt        DateTime           @default(now())
+}
+
+enum TicketCategoryEnum {
+  CAT1
+  CAT2
+  CAT3
+}
+
+enum Role {
+  USER
+  ADMIN
+}
