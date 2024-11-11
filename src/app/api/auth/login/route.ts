@@ -11,13 +11,18 @@ export async function POST(req: NextRequest) {
 
     if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
 
-    const user = await prisma.user.findUnique({ where: { email: body.email } });
+    try {
+        const user = await prisma.user.findUnique({ where: { email: body.email } });
 
-    if (!user || !bcrypt.compareSync(body.password, user.password)) return NextResponse.json({ message: 'uncorrect email or password' }, { status: 400 });
+        if (!user || !bcrypt.compareSync(body.password, user.password)) return NextResponse.json({ message: 'uncorrect email or password' }, { status: 400 });
 
-    await createSession(user);
+        await createSession(user);
 
-    await createSession({ id: user.id, name: user.name, role: user.role });
+        await createSession({ id: user.id, name: user.name, role: user.role });
 
-    return NextResponse.json({ user, message: 'Login successfully' }, { status: 200 });
+        return NextResponse.json({ user, message: 'Login successfully' }, { status: 200 });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ message: 'internal server error' }, { status: 500 });
+    }
 }

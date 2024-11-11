@@ -1,9 +1,11 @@
 import Hero from '@/components/Hero';
+import HomeMatchs from '../components/HomeMatches';
 
 export default function Home() {
     return (
-        <div className="">
+        <div>
             <Hero />
+            <HomeMatchs />
         </div>
     );
 }

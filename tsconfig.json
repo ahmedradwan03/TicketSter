@@ -1,42 +1,68 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/importStadium.js"],
+  "exclude": ["node_modules"]
+}
 // {
 //   "compilerOptions": {
+//     "module": "CommonJS",
 //     "target": "ESNext",
-//     "lib": ["dom", "dom.iterable", "esnext"],
-//     "allowJs": true,
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": [
+//         "src/*"
+//       ]
+//     },
+//     "esModuleInterop": true,
 //     "skipLibCheck": true,
 //     "strict": true,
+//     "lib": [
+//       "dom",
+//       "dom.iterable",
+//       "esnext"
+//     ],
+//     "allowJs": true,
 //     "noEmit": true,
-//     "esModuleInterop": true,
-//     "module": "esnext",
-//     "moduleResolution": "bundler",
+//     "incremental": true,
+//     "moduleResolution": "node",
 //     "resolveJsonModule": true,
 //     "isolatedModules": true,
 //     "jsx": "preserve",
-//     "incremental": true,
 //     "plugins": [
 //       {
 //         "name": "next"
 //       }
-//     ],
-//     "paths": {
-//       "@/*": ["./src/*"]
-//     }
+//     ]
 //   },
-//   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/importStadium.js"],
-//   "exclude": ["node_modules"]
+//   "include": [
+//     "next-env.d.ts",
+//     ".next/types/**/*.ts",
+//     "**/*.ts",
+//     "**/*.tsx"
+//   ],
+//   "exclude": [
+//     "node_modules"
+//   ]
 // }
-
-
-{
-  "compilerOptions": {
-    "module": "CommonJS",
-    "target": "ESNext",
-    "baseUrl": ".", 
-    "paths": {
-      "@/*": ["src/*"]  
-    },
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true
-  }
-}
