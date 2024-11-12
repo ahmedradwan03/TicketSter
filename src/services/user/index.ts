@@ -1,6 +1,6 @@
 export const getAllmatches = async () => {
     try {
-        const response = await fetch(`api/user/matches`, {
+        const response = await fetch(`api/matches`, {
             method: 'GET',
         });
         if (!response.ok) {

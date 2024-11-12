@@ -22,10 +22,12 @@ export interface SessionPayload extends JWTPayload {
     role: string;
 }
 
-interface StadiumDto {
-    id: number;
+export interface StadiumDto {
     name: string;
-    location: string;
+    location: {
+        street: string;
+        city: string;
+    };
     capacity: number;
 }
 

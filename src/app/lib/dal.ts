@@ -9,8 +9,9 @@ export const verifySession = cache(async () => {
     if (cookie) {
         const session = await decrypt(cookie);
         if (!session?.id) redirect('/login');
-        return { isAuth: true, id: session.id };
+        return { isAuth: true, role: session.role, id: session.id };
     }
+    return null;
 });
 
 export const getUser = cache(async () => {

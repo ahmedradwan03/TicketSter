@@ -6,6 +6,8 @@ import bcrypt from 'bcryptjs';
 import { createSession } from '@/app/lib/session';
 
 export async function POST(req: NextRequest) {
+    console.log(req.body);
+
     const body = (await req.json()) as SignupUserDto;
 
     const validation = signupScheam.safeParse(body);
