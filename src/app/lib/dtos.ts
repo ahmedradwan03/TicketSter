@@ -31,20 +31,28 @@ export interface StadiumDto {
     capacity: number;
 }
 
-interface TeamDto {
+export interface TeamDto {
     id: number;
     name: string;
     image: string;
+    country: string;
+    stadiumId: number;
 }
 
-interface TicketCategoryDto {
-    id: number;
-    name: string;
+export enum TicketCategoryEnum {
+    CAT1 = 'CAT1',
+    CAT2 = 'CAT2',
+    CAT3 = 'CAT3',
+}
+
+export interface TicketCategoryDto {
+    category: TicketCategoryEnum;
     price: number;
+    ticketsAvailable: number;
+    gate: string;
 }
 
 export interface MatchDto {
-    id: number;
     name: string;
     date: Date;
     stadiumId: number;
@@ -56,5 +64,5 @@ export interface MatchDto {
     ticketCategories: TicketCategoryDto[];
     mainEvent: boolean;
     createdAt: Date;
-    bookingCount: number; // This represents the count of bookings
+    bookingCount: number;
 }

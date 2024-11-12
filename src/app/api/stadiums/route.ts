@@ -1,6 +1,6 @@
 import prisma from '@/app/lib/database';
 import { StadiumDto } from '@/app/lib/dtos';
-import { createStadiumSchema } from '@/app/lib/validationSchemas';
+import { createStadiumSchema, updateStadiumSchema } from '@/app/lib/validationSchemas';
 import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -25,7 +25,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-    if (await verifyAdmin()) return await verifyAdmin();
+    const response = await verifyAdmin();
+    if (response) return response;
+
     const body = (await req.json()) as StadiumDto;
     const validation = createStadiumSchema.safeParse(body);
 
@@ -43,5 +45,60 @@ export async function POST(req: NextRequest) {
     } catch (error) {
         console.error('Error creating stadium:', error);
         return NextResponse.json({ message: 'An error occurred while creating the stadium.' }, { status: 500 });
+    }
+}
+
+export async function PUT(req: NextRequest) {
+    const response = await verifyAdmin();
+    if (response) return response;
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
+    }
+
+    const body = (await req.json()) as StadiumDto;
+    const validation = updateStadiumSchema.safeParse(body);
+
+    if (!validation.success) {
+        return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
+    }
+
+    try {
+        const updatedStadium = await prisma.stadium.update({
+            where: { id: Number(id) },
+            data: {
+                name: body.name,
+                location: body.location,
+                capacity: body.capacity,
+            },
+        });
+
+        return NextResponse.json({ updatedStadium, message: 'Stadium updated successfully.' }, { status: 200 });
+    } catch (error) {
+        console.error('Error updating stadium:', error);
+        return NextResponse.json({ message: 'An error occurred while updating the stadium.' }, { status: 500 });
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    const response = await verifyAdmin();
+    if (response) return response;
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
+
+    try {
+        await prisma.stadium.delete({
+            where: { id: Number(id) },
+        });
+        return NextResponse.json({ message: 'Stadium deleted successfully.' }, { status: 200 });
+    } catch (error) {
+        console.error('Error deleting stadium:', error);
+        return NextResponse.json({ message: 'An error occurred while deleting the stadium.' }, { status: 500 });
     }
 }
