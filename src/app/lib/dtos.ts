@@ -3,6 +3,7 @@ import { JWTPayload } from 'jose';
 export interface UserDTO {
     id: number;
     name: string;
+    role: string;
 }
 
 export interface SignupUserDto {
@@ -53,6 +54,7 @@ export interface TicketCategoryDto {
 }
 
 export interface MatchDto {
+    id: string;
     name: string;
     date: Date;
     stadiumId: number;

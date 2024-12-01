@@ -19,6 +19,7 @@ export async function GET() {
             },
         });
 
+
         if (!matches || matches.length === 0) return NextResponse.json({ message: 'No upcoming matches found.' }, { status: 404 });
 
         return NextResponse.json({ matches, message: 'Matches retrieved successfully.' }, { status: 200 });

@@ -15,6 +15,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
         return NextResponse.json(match);
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ error: 'Server error' }, { status: 500 });
     }
 }
@@ -30,6 +31,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         return NextResponse.json({ message: 'Match deleted successfully' }, { status: 200 });
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ error: 'Error deleting match' }, { status: 500 });
     }
 }

@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { UserDTO } from '@/app/lib/dtos';
 
-export default function Navbar({ userName }: { userName: string | null }) {
+export default function Navbar({ user }: { user: UserDTO | null }) {
     const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -48,9 +49,18 @@ export default function Navbar({ userName }: { userName: string | null }) {
                                 </Link>
                             </li>
                         ))}
-                        {userName ? (
-                            <div>
-                                <span className="ml-2 py-2 px-3 text-primary">{userName?.toUpperCase()} | </span>
+                        {user ? (
+                            <div className="flex">
+                                <Link href={'/matches'} className="py-2 px-3 text-gray-900 rounded flex items-center group">
+                                    <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Matches</span>
+                                </Link>
+                                {user.role === 'ADMIN' ? (
+                                    <Link href={'/dashboard'} className="py-2 px-3 text-gray-900 rounded flex items-center group">
+                                        <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Dashboard</span>
+                                    </Link>
+                                ) : (
+                                    <span className="ml-2 py-2 px-3 text-primary">{user?.name?.toUpperCase()} | </span>
+                                )}
 
                                 <button onClick={handleLogout} className="py-2 px-8 rounded-[50px] text-white bg-primary">
                                     Logout

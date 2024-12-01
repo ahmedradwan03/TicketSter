@@ -8,7 +8,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     const response = await verifyAdmin();
     if (response) return response;
 
-    const id = new URL(request.url).pathname.split('/').pop();
+    const id = params.id;
 
     if (!id) return NextResponse.json({ message: 'Stadium ID is requestuired' }, { status: 400 });
 
@@ -43,7 +43,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     const response = await verifyAdmin();
     if (response) return response;
 
-    const id = new URL(request.url).pathname.split('/').pop();
+    const id = params.id;
 
     if (!id) return NextResponse.json({ message: 'Stadium ID is requestuired' }, { status: 400 });
 
