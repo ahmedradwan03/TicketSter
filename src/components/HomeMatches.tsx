@@ -2,7 +2,7 @@
 import { MatchDto } from '@/app/lib/dtos';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { getAllmatches } from '@/services/user';
+import { getAllMatches } from '@/services/matches';
 
 const Homematches = () => {
     const [matches, setMatches] = useState<MatchDto[]>([]);
@@ -10,7 +10,7 @@ const Homematches = () => {
 
     useEffect(() => {
         async function fetchMatches() {
-            const { matches, message } = await getAllmatches();
+            const { matches, message } = await getAllMatches();
 
             if (matches.length === 0) {
                 setError(message);

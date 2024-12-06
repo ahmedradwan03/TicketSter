@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import { MatchDto } from '@/app/lib/dtos';
 
-const MatchCard = ({ match }) => {
+const MatchCard = ({ match }: { match: MatchDto }) => {
     return (
         <div
             className="max-w-4xl w-full mx-auto border rounded-lg shadow-lg bg-white p-4 flex flex-col md:flex-row items-center gap-6 h-full">

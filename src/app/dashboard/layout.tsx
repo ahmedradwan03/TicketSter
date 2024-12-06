@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     ];
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col">
             <nav className="bg-primary text-white p-4 flex justify-center items-center">
                 <div className="flex justify-between items-center">
                     <div className="flex space-x-4">
@@ -22,7 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </div>
                 </div>
             </nav>
-            <div className="flex-1 p-6 bg-gray-100">{children}</div>
+            <div className="flex-1 p-6 bg-gray-100 w[80%]">{children}</div>
         </div>
     );
 }

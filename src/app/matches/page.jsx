@@ -1,9 +1,9 @@
 import MatchCard from '../../components/MatchCard';
-import { getAllmatches } from '../../services/user';
+import { getAllMatches } from '../../services/matches';
 
 export default async function allMatches() {
 
-    const { matches, message } = await getAllmatches();
+    const { matches, message } = await getAllMatches();
     if (!matches) return message;
 
     return (

@@ -24,6 +24,7 @@ export interface SessionPayload extends JWTPayload {
 }
 
 export interface StadiumDto {
+    id: number;
     name: string;
     location: {
         street: string;

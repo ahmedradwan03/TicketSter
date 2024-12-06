@@ -44,30 +44,32 @@ export const createTeamSchema = z.object({
     name: z.string().min(1, 'Team name is required'),
     image: z.string().min(1, 'Team image URL is required'),
     country: z.string().min(1, 'Team country is required'),
-    stadiumId: z.number().optional()
+    stadiumId: z.number().optional(),
 });
 
 export const updateTeamSchema = z.object({
     name: z.string().optional(),
     image: z.string().optional(),
     country: z.string().optional(),
-    stadiumId: z.number().optional()
-}); 
+    stadiumId: z.number().optional(),
+});
 
 
 export const createMatchSchema = z.object({
-    name: z.string().min(1, "Match name is required"),
+    name: z.string().min(1, 'Match name is required'),
     date: z.string().refine((date) => !isNaN(Date.parse(date)), {
-        message: "Date must be valid"
+        message: 'Date must be valid',
     }),
-    stadiumId: z.string().min(1, "Stadium ID is required"),
-    team1Id: z.string().min(1, "Team 1 ID is required"),
-    team2Id: z.string().min(1, "Team 2 ID is required"),
+    stadiumId: z.number().min(1, 'Stadium ID is required'),
+    team1Id: z.number().min(1, 'Team 1 ID is required'),
+    team2Id: z.number().min(1, 'Team 2 ID is required'),
     mainEvent: z.boolean(),
     ticketCategories: z.array(
         z.object({
-            name: z.string().min(1, "Category name is required"),
-            price: z.number().positive("Price must be a positive number")
-        })
-    ).min(1, "At least one ticket category is required")
+            category: z.string().min(1, 'Category name is required'),
+            price: z.number().positive('Price must be a positive number'),
+            ticketsAvailable: z.number().int().positive('Tickets available must be a positive integer'),
+            gate: z.string().optional(),
+        }),
+    ).optional(),
 });
