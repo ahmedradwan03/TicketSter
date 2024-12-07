@@ -33,6 +33,15 @@ export async function POST(req: NextRequest) {
 
     if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
     try {
+
+        const existingStadium = await prisma.stadium.findFirst({
+            where: { name: body.name },
+        });
+
+        if (existingStadium) {
+            return NextResponse.json({ message: 'A stadium with this name already exists.' }, { status: 400 });
+        }
+
         const newStadium = await prisma.stadium.create({
             data: {
                 name: body.name,
@@ -48,7 +57,7 @@ export async function POST(req: NextRequest) {
     }
 }
 
-export async function PUT(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
     const response = await verifyAdmin();
     if (response) return response;
 

@@ -19,7 +19,7 @@ export const createStadium = async (stadiumData: StadiumDto) => {
 
 export const updateStadium = async (stadiumId: number, updatedData: StadiumDto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/stadiums/${stadiumId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),
     });

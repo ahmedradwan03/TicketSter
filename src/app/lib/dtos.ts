@@ -24,7 +24,7 @@ export interface SessionPayload extends JWTPayload {
 }
 
 export interface StadiumDto {
-    id: number;
+    id?: number;
     name: string;
     location: {
         street: string;
@@ -55,7 +55,7 @@ export interface TicketCategoryDto {
 }
 
 export interface MatchDto {
-    id: string;
+    id: number;
     name: string;
     date: Date;
     stadiumId: number;
@@ -64,7 +64,7 @@ export interface MatchDto {
     team1: TeamDto;
     team2Id: number;
     team2: TeamDto;
-    ticketCategories: TicketCategoryDto[];
+    ticketCategories?: TicketCategoryDto[];
     mainEvent: boolean;
     createdAt: Date;
     bookingCount: number;

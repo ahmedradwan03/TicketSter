@@ -5,6 +5,7 @@ import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+
     const response = await verifyAdmin();
     if (response) return response;
 
@@ -39,6 +40,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
 }
 
+
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const response = await verifyAdmin();
     if (response) return response;
@@ -48,15 +50,16 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     if (!id) return NextResponse.json({ message: 'Stadium ID is requestuired' }, { status: 400 });
 
     try {
-        const stadium = await prisma.stadium.findUnique({
-            where: { id: Number(id) },
-        });
+        const stadium = await prisma.stadium.findUnique({ where: { id: Number(id) } });
 
         if (!stadium) return NextResponse.json({ message: 'Stadium not found with this ID' }, { status: 404 });
 
-        await prisma.stadium.delete({
-            where: {id: Number(id) },
-        });
+        const match = await prisma.match.findFirst({ where: { stadiumId: stadium.id } });
+
+        if (match) return NextResponse.json({ message: 'Stadium has Matches cant delete' }, { status: 404 });
+
+        await prisma.stadium.delete({ where: { id: Number(id) } });
+
         return NextResponse.json({ message: 'Stadium deleted successfully.' }, { status: 200 });
     } catch (error) {
         console.log('Error deleting stadium:', error);

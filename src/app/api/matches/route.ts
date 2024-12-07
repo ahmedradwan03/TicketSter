@@ -35,6 +35,16 @@ export async function POST(req: NextRequest) {
 
     if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
 
+
+    const stadium = await prisma.stadium.findUnique({ where: { id: body.stadiumId }, select: { capacity: true } });
+
+    if (!stadium) return NextResponse.json({ message: 'Stadium not found.' }, { status: 404 });
+
+    const totalAvailableTickets = body.ticketCategories.reduce((sum, category) => sum + (Number(category.ticketsAvailable) || 0), 0);
+
+    if (totalAvailableTickets > stadium.capacity) return NextResponse.json({ message: `Total available tickets (${totalAvailableTickets}) exceed stadium capacity (${stadium.capacity}).` }, { status: 400 });
+
+
     try {
         const match = await prisma.match.create({
             data: {

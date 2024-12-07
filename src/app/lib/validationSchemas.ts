@@ -73,3 +73,22 @@ export const createMatchSchema = z.object({
         }),
     ).optional(),
 });
+
+export const updateMatchSchema = z.object({
+    name: z.string().min(1, 'Match name is required').optional(),
+    date: z.string()
+        .refine((date) => !isNaN(Date.parse(date)), { message: 'Date must be valid' })
+        .optional(),
+    stadiumId: z.number().min(1, 'Stadium ID is required').optional(),
+    team1Id: z.number().min(1, 'Team 1 ID is required').optional(),
+    team2Id: z.number().min(1, 'Team 2 ID is required').optional(),
+    mainEvent: z.boolean().optional(),
+    ticketCategories: z.array(
+        z.object({
+            category: z.string().min(1, 'Category name is required'),
+            price: z.number().positive('Price must be a positive number'),
+            ticketsAvailable: z.number().int().positive('Tickets available must be a positive integer'),
+            gate: z.string().optional(),
+        }),
+    ).optional(),
+});
