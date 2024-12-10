@@ -28,7 +28,7 @@ export async function PATCH(req: NextRequest) {
                 name: body.name,
                 image: body.image,
                 country: body.country,
-                stadiumId: body.stadiumId
+                stadiumId: body.stadiumId,
             },
         });
 

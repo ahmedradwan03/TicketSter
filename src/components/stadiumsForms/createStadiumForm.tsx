@@ -5,7 +5,6 @@ import { createStadium } from '@/services/stadiums';
 import { StadiumDto } from '@/app/lib/dtos';
 
 const CreateStadiumForm = () => {
-
     const [formData, setFormData] = useState<StadiumDto>({
         name: '',
         location: {
@@ -18,10 +17,7 @@ const CreateStadiumForm = () => {
     const [error, setError] = useState<string | null>(null);
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-        field: 'name' | 'capacity' | 'street' | 'city'
-    ) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'name' | 'capacity' | 'street' | 'city') => {
         const { name, value } = e.target;
 
         if (name === 'name' || name === 'capacity') {
@@ -63,14 +59,9 @@ const CreateStadiumForm = () => {
         setError(null);
     };
 
-
-
     return (
         <div>
-            <button
-                onClick={()=>  setIsFormVisible((prev) => !prev)}
-                className="p-2 bg-primary text-white rounded"
-            >
+            <button onClick={() => setIsFormVisible((prev) => !prev)} className="p-2 bg-primary text-white rounded">
                 {isFormVisible ? 'Close Form' : 'Crate Stadium'}
             </button>
             {isFormVisible && (
@@ -79,9 +70,10 @@ const CreateStadiumForm = () => {
 
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-
                         <div>
-                            <label htmlFor="name" className="block text-gray-700">Stadium Name</label>
+                            <label htmlFor="name" className="block text-gray-700">
+                                Stadium Name
+                            </label>
                             <input
                                 type="text"
                                 id="name"
@@ -94,7 +86,9 @@ const CreateStadiumForm = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="capacity" className="block text-gray-700">Capacity</label>
+                            <label htmlFor="capacity" className="block text-gray-700">
+                                Capacity
+                            </label>
                             <input
                                 type="number"
                                 id="capacity"
@@ -108,7 +102,9 @@ const CreateStadiumForm = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="street" className="block text-gray-700">Street</label>
+                            <label htmlFor="street" className="block text-gray-700">
+                                Street
+                            </label>
                             <input
                                 type="text"
                                 id="street"
@@ -121,7 +117,9 @@ const CreateStadiumForm = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="city" className="block text-gray-700">City</label>
+                            <label htmlFor="city" className="block text-gray-700">
+                                City
+                            </label>
                             <input
                                 type="text"
                                 id="city"
@@ -132,13 +130,9 @@ const CreateStadiumForm = () => {
                                 required
                             />
                         </div>
-
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full p-2 bg-primary text-white font-semibold rounded hover:bg-primary-"
-                    >
+                    <button type="submit" className="w-full p-2 bg-primary text-white font-semibold rounded hover:bg-primary-">
                         Create Stadium
                     </button>
                 </form>

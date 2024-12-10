@@ -34,7 +34,7 @@ export interface StadiumDto {
 }
 
 export interface TeamDto {
-    id: number;
+    id?: number;
     name: string;
     image: string;
     country: string;
@@ -57,14 +57,14 @@ export interface TicketCategoryDto {
 export interface MatchDto {
     id: number;
     name: string;
-    date: Date;
+    date: string;
     stadiumId: number;
     stadium: StadiumDto;
     team1Id: number;
     team1: TeamDto;
     team2Id: number;
     team2: TeamDto;
-    ticketCategories?: TicketCategoryDto[];
+    ticketCategories: TicketCategoryDto[];
     mainEvent: boolean;
     createdAt: Date;
     bookingCount: number;

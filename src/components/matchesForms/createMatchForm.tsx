@@ -1,12 +1,15 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { getAllTeams } from '@/services/teams';
-import { getAllStadiums } from '@/services/stadiums';
+import React, { useState } from 'react';
 import { createMatch } from '@/services/matches';
 import { StadiumDto, TeamDto, TicketCategoryDto, TicketCategoryEnum } from '@/app/lib/dtos';
 import { useRouter } from 'next/navigation';
 
-const CreateMatchForm = () => {
+interface CreateMatchFormProps {
+    teams: TeamDto[];
+    stadiums: StadiumDto[];
+}
+
+const CreateMatchForm = ({ teams, stadiums }: CreateMatchFormProps) => {
     const router = useRouter();
 
     const [formData, setFormData] = useState({
@@ -19,29 +22,8 @@ const CreateMatchForm = () => {
         ticketCategories: [] as TicketCategoryDto[],
     });
 
-    const [stadiums, setStadiums] = useState<StadiumDto[] | null>(null);
-    const [teams, setTeams] = useState<TeamDto[] | null>(null);
     const [error, setError] = useState<any>({});
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-
-    useEffect(() => {
-        const fetchTeamsAndStadiums = async () => {
-            try {
-                const [teamsResponse, stadiumsResponse] = await Promise.all([getAllTeams(), getAllStadiums()]);
-
-                if (teamsResponse.success && stadiumsResponse.success) {
-                    setTeams(teamsResponse.teams);
-                    setStadiums(stadiumsResponse.stadiums);
-                } else {
-                    setError('Failed to load teams or stadiums.');
-                }
-            } catch (error) {
-                console.error('Error fetching teams and stadiums:', error);
-                setError({ global: 'An error occurred while fetching data.' });
-            }
-        };
-        fetchTeamsAndStadiums();
-    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -88,19 +70,14 @@ const CreateMatchForm = () => {
 
     return (
         <div>
-            <button
-                onClick={() => setIsFormVisible((prev) => !prev)}
-                className="p-2 bg-primary text-white rounded"
-            >
-                {isFormVisible ? 'Close Form' : 'Crate Match'}
+            <button onClick={() => setIsFormVisible((prev) => !prev)} className="p-2 bg-primary text-white rounded">
+                {isFormVisible ? 'Close Form' : 'Create Match'}
             </button>
             {isFormVisible && (
                 <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
-
-
                     <h1 className="text-3xl font-semibold text-gray-800 text-center">Create Match</h1>
 
-                    {error.global && (<div className="text-red-500 text-center text-sm mb-4">{error.global}</div>)}
+                    {error.global && <div className="text-red-500 text-center text-sm mb-4">{error.global}</div>}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {/* Match Name */}
@@ -206,8 +183,13 @@ const CreateMatchForm = () => {
                         {['CAT1', 'CAT2', 'CAT3'].map((category, index) => (
                             <div key={index} className="flex items-center space-x-4 mb-4">
                                 <div className="w-1/4">
-                                    <input type="text" name="category" value={category} disabled
-                                           className="w-full border border-gray-300 rounded-md p-3 focus:ring focus:ring-primary focus:outline-none" />
+                                    <input
+                                        type="text"
+                                        name="category"
+                                        value={category}
+                                        disabled
+                                        className="w-full border border-gray-300 rounded-md p-3 focus:ring focus:ring-primary focus:outline-none"
+                                    />
                                 </div>
                                 <div className="w-1/4">
                                     <input
@@ -241,7 +223,6 @@ const CreateMatchForm = () => {
                                 </div>
                             </div>
                         ))}
-
                     </div>
 
                     {/* Submit Button */}

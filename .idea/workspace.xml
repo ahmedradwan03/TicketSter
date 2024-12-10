@@ -5,21 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e734f254-63bd-4a52-b19c-39c31de34591" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/dashboard/stadiums/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/matchesForms/updateMatchForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/stadiumsForms/createStadiumForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/stadiumsForms/updateStadium.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/stadiumsForms/updateStadiumForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/teamsForms/createMatchForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/matches/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/matches/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/matches/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/matches/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/stadiums/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/stadiums/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/stadiums/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/stadiums/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/teams/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/teams/[id]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/teams/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/teams/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/dashboard/matches/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/matches/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/dashboard/stadiums/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/stadiums/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/lib/dtos.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/dtos.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/lib/validationSchemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/validationSchemas.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/matchesForms/createMatchForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/matchesForms/createMatchForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/matchesForms/updateMatchForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/matchesForms/updateMatchForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/stadiumsForms/createStadiumForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/stadiumsForms/createStadiumForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/stadiumsForms/updateStadium.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/matches/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/matches/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/stadiums/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/stadiums/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,10 +109,25 @@
       <workItem from="1733482294787" duration="15034000" />
       <workItem from="1733553502334" duration="15147000" />
       <workItem from="1733571527364" duration="6964000" />
+      <workItem from="1733659044872" duration="5442000" />
+      <workItem from="1733667469314" duration="17000" />
+      <workItem from="1733751911604" duration="13457000" />
+      <workItem from="1733844968064" duration="1572000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

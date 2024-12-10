@@ -1,26 +1,30 @@
 // import { MatchDto } from '@/app/lib/dtos';
 import { API_BASE_URL, fetcher } from '../fetcher';
 
+// import { MatchDto } from '@/app/lib/dtos';
 
-export const getAllMatches = async () => {
-    const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches`, { method: 'GET' });
-    return { success, matches: success ? data.matches : [], message: message || 'Failed to fetch matches.' };
-};
-
-export const createMatch = async (matchData:{
+interface matchdto {
     name: string;
-    date: string;
+    date: Date|string;
     stadiumId: number;
     team1Id: number;
     team2Id: number;
     mainEvent: boolean;
     ticketCategories?: {
         category: string;
-        price: number;
-        ticketsAvailable: number;
+        price: number | string;
+        ticketsAvailable: number | string;
         gate: string;
     }[];
-}) => {
+}
+
+
+export const getAllMatches = async () => {
+    const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches`, { method: 'GET' });
+    return { success, matches: success ? data.matches : [], message: message || 'Failed to fetch matches.' };
+};
+
+export const createMatch = async (matchData: matchdto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,20 +33,7 @@ export const createMatch = async (matchData:{
     return { success, match: success ? data.match : null, message: message || 'Failed to create match.' };
 };
 
-export const updateMatch = async (matchId: number, updatedData: {
-    name: string;
-    date?: Date;
-    stadiumId: number;
-    team1Id: number;
-    team2Id: number;
-    mainEvent: boolean;
-    ticketCategories?: {
-        category: string;
-        price: number;
-        ticketsAvailable: number;
-        gate: string;
-    }[];
-}) => {
+export const updateMatch = async (matchId: number, updatedData: matchdto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches/${matchId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
