@@ -1,5 +1,6 @@
 import MatchCard from '../../components/MatchCard';
 import { getAllMatches } from '../../services/matches';
+import { MatchDto } from '../lib/dtos';
 
 export default async function allMatches() {
 
@@ -9,7 +10,7 @@ export default async function allMatches() {
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col gap-3 items-center justify-center p-4">
             {matches && matches.length > 0 ? (
-                matches.map((match) => (
+                matches.map((match:MatchDto) => (
                     <MatchCard key={match.id} match={match} />
                 ))
             ) : (
