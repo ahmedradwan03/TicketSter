@@ -2,6 +2,7 @@ import MatchCard from '../../components/MatchCard';
 import { getAllMatches } from '../../services/matches';
 import { MatchDto } from '../lib/dtos';
 
+
 export default async function allMatches() {
 
     const { matches, message } = await getAllMatches();

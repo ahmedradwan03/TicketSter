@@ -6,7 +6,6 @@ export const fetcher = async (url: string, options: RequestInit) => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.log(errorData);
             return { success: false, message: errorData.message || 'An error occurred while processing the request.' };
         }
 

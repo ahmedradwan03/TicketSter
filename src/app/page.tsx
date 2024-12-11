@@ -1,11 +1,16 @@
 import Hero from '@/components/Hero';
-import HomeMatchs from '../components/HomeMatches';
+import HomeMatches from '../components/HomeMatches';
+import { getAllMatches } from '@/services/matches';
 
-export default function Home() {
+export default async function Home() {
+
+    const matchesResponse = await getAllMatches();
+
     return (
         <div>
             <Hero />
-            <HomeMatchs />
+            <HomeMatches matches={matchesResponse.matches}
+                         message={!matchesResponse.success ? matchesResponse.message : ''} />
         </div>
     );
 }

@@ -7,6 +7,7 @@ import UpdateStadiumForm from '@/components/stadiumsForms/updateStadiumForm';
 export default async function stadium() {
     const stadiumsResponse = await getAllStadiums();
 
+
     return (
         <div className="w-[80%] mx-auto p-8 ">
             <CreateStadiumForm />

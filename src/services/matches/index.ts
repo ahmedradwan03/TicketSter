@@ -1,11 +1,9 @@
-// import { MatchDto } from '@/app/lib/dtos';
 import { API_BASE_URL, fetcher } from '../fetcher';
 
-// import { MatchDto } from '@/app/lib/dtos';
 
 interface matchdto {
     name: string;
-    date: Date|string;
+    date: Date | string;
     stadiumId: number;
     team1Id: number;
     team2Id: number;

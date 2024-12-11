@@ -62,7 +62,7 @@ const CreateStadiumForm = () => {
     return (
         <div>
             <button onClick={() => setIsFormVisible((prev) => !prev)} className="p-2 bg-primary text-white rounded">
-                {isFormVisible ? 'Close Form' : 'Crate Stadium'}
+                {isFormVisible ? 'Close' : 'Crate Stadium'}
             </button>
             {isFormVisible && (
                 <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">

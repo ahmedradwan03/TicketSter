@@ -1,4 +1,5 @@
 import { API_BASE_URL, fetcher } from '../fetcher';
+import { TeamDto } from '@/app/lib/dtos';
 
 export const getAllTeams = async () => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/teams`, {
@@ -12,7 +13,7 @@ export const getAllTeams = async () => {
     };
 };
 
-export const createTeam = async (teamData: { name: string; city: string }) => {
+export const createTeam = async (teamData: TeamDto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/teams`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,9 +27,9 @@ export const createTeam = async (teamData: { name: string; city: string }) => {
     };
 };
 
-export const updateTeam = async (teamId: number, updatedData: { name: string; city: string }) => {
+export const updateTeam = async (teamId: number, updatedData: TeamDto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/teams/${teamId}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),
     });

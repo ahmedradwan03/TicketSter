@@ -5,21 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e734f254-63bd-4a52-b19c-39c31de34591" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/stadiumsForms/updateStadiumForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/teamsForms/createMatchForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/dashboard/teams/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/teamsForms/createTeamForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/teamsForms/updateTeamForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/uploadImage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/matches/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/matches/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/teams/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/teams/[id]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/matches/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/matches/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/teams/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/teams/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/matches/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/matches/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/dashboard/stadiums/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/stadiums/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/lib/dtos.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/dtos.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/lib/validationSchemas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/validationSchemas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/matches/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/matches/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeMatches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomeMatches.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/matchesForms/createMatchForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/matchesForms/createMatchForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/matchesForms/updateMatchForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/matchesForms/updateMatchForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/stadiumsForms/createStadiumForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/stadiumsForms/createStadiumForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/stadiumsForms/updateStadium.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/teamsForms/createMatchForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/fetcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/fetcher.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/matches/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/matches/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/teams/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/teams/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +69,7 @@
       <recent name="D:\Messi\MERN Projects\ticketster\src\services\matches" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -77,9 +80,20 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -113,6 +127,7 @@
       <workItem from="1733667469314" duration="17000" />
       <workItem from="1733751911604" duration="13457000" />
       <workItem from="1733844968064" duration="1572000" />
+      <workItem from="1733919623592" duration="11161000" />
     </task>
     <servers />
   </component>

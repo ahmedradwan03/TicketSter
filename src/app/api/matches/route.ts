@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET() {
     try {
         const matches = await prisma.match.findMany({
-            where: { date: { gt: new Date() } },
+            where: { date: { gt: new Date() }  },
             include: {
                 stadium: true,
                 team1: true,
@@ -16,7 +16,6 @@ export async function GET() {
                 Booking: true,
             },
         });
-
         if (!matches || matches.length === 0) return NextResponse.json({ message: 'No upcoming matches found.' }, { status: 404 });
 
         return NextResponse.json({ matches, message: 'Matches retrieved successfully.' }, { status: 200 });
@@ -31,10 +30,10 @@ export async function POST(req: NextRequest) {
     if (response) return response;
 
     const body = (await req.json()) as MatchDto;
+
     const validation = createMatchSchema.safeParse(body);
 
     if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
-
 
     const stadium = await prisma.stadium.findUnique({ where: { id: body.stadiumId }, select: { capacity: true } });
 
@@ -43,7 +42,6 @@ export async function POST(req: NextRequest) {
     const totalAvailableTickets = body.ticketCategories.reduce((sum, category) => sum + (Number(category.ticketsAvailable) || 0), 0);
 
     if (totalAvailableTickets > stadium.capacity) return NextResponse.json({ message: `Total available tickets (${totalAvailableTickets}) exceed stadium capacity (${stadium.capacity}).` }, { status: 400 });
-
 
     try {
         const match = await prisma.match.create({

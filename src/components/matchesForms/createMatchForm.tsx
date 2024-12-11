@@ -71,7 +71,7 @@ const CreateMatchForm = ({ teams, stadiums }: CreateMatchFormProps) => {
     return (
         <div>
             <button onClick={() => setIsFormVisible((prev) => !prev)} className="p-2 bg-primary text-white rounded">
-                {isFormVisible ? 'Close Form' : 'Create Match'}
+                {isFormVisible ? 'Close' : 'Create Match'}
             </button>
             {isFormVisible && (
                 <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
