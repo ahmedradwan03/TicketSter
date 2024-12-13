@@ -14,6 +14,7 @@ model User {
   password  String
   role      Role      @default(USER)
   bookings  Booking[]
+  active    Boolean   @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Team      Team?     @relation(fields: [teamId], references: [id])

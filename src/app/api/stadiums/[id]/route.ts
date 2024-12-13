@@ -11,7 +11,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
     const id = params.id;
 
-    if (!id) return NextResponse.json({ message: 'Stadium ID is requestuired' }, { status: 400 });
+    if (!id) return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
 
     const body = (await request.json()) as StadiumDto;
     const validation = updateStadiumSchema.safeParse(body);
@@ -47,7 +47,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     const id = params.id;
 
-    if (!id) return NextResponse.json({ message: 'Stadium ID is requestuired' }, { status: 400 });
+    if (!id) return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
 
     try {
         const stadium = await prisma.stadium.findUnique({ where: { id: Number(id) } });

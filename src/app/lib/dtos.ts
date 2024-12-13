@@ -4,6 +4,7 @@ export interface UserDTO {
     id: number;
     name: string;
     role: string;
+    active: boolean;
 }
 
 export interface SignupUserDto {
