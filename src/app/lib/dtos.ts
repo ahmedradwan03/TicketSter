@@ -3,6 +3,7 @@ import { JWTPayload } from 'jose';
 export interface UserDTO {
     id: number;
     name: string;
+    email: string;
     role: string;
     active: boolean;
 }
@@ -22,6 +23,12 @@ export interface SessionPayload extends JWTPayload {
     id: number;
     name: string;
     role: string;
+}
+
+export interface BookingDto {
+    userId: number;
+    matchId: number;
+    categoryId: number;
 }
 
 export interface StadiumDto {
@@ -49,6 +56,7 @@ export enum TicketCategoryEnum {
 }
 
 export interface TicketCategoryDto {
+    id: number;
     category: TicketCategoryEnum;
     price: number;
     ticketsAvailable: number;

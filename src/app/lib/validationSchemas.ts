@@ -91,3 +91,9 @@ export const updateMatchSchema = z.object({
         }),
     ).optional(),
 });
+
+export const createBooking = z.object({
+    userId: z.number().int().positive(),
+    matchId: z.number().int().positive(),
+    categoryId:z.number().int().positive(),
+});

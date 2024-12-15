@@ -15,9 +15,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
         if (!user) return NextResponse.json({ message: 'User not found with this ID' }, { status: 404 });
 
-        const userUpdated = await prisma.user.update({ where: { id }, data: { active: false } });
+        const userUpdated = await prisma.user.update({ where: { id }, data: { active: !user.active } });
 
-        return NextResponse.json({ userUpdated, message: 'user become deactivate successfully.' }, { status: 200 });
+        return NextResponse.json({
+            userUpdated,
+            message: `user become ${userUpdated.active ? 'Active' : 'InActive'} successfully.`,
+        }, { status: 200 });
     } catch (error) {
         console.error('Error updating user:', error);
         return NextResponse.json({ message: 'An error occurred while updating user.' }, { status: 500 });

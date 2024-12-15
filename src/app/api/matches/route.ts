@@ -5,6 +5,7 @@ import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
+
     try {
         const matches = await prisma.match.findMany({
             where: { date: { gt: new Date() }  },

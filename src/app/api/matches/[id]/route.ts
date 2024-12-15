@@ -4,17 +4,22 @@ import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { MatchDto, TicketCategoryEnum } from '@/app/lib/dtos';
 import { updateMatchSchema } from '@/app/lib/validationSchemas';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: { id: number } }) {
     try {
         const match = await prisma.match.findUnique({
             where: {
-                id: parseInt(params.id),
+                id: Number(params.id),
             },
             include: {
                 team1: true,
                 team2: true,
                 stadium: true,
                 ticketCategories: true,
+                Booking: {
+                    include: {
+                        category: true,
+                    },
+                },
             },
         });
 
@@ -22,7 +27,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
             return NextResponse.json({ error: 'Match not found' }, { status: 404 });
         }
 
-        return NextResponse.json(match);
+        return NextResponse.json({ match, message: 'Match fetch successfully!' }, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: 'Server error' }, { status: 500 });
@@ -46,7 +51,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
                 message: 'Invalid data',
                 errors: validation.error.flatten().fieldErrors,
             },
-            { status: 400 }
+            { status: 400 },
         );
     }
     try {
@@ -68,28 +73,28 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
                 ticketCategories:
                     body.ticketCategories && body.ticketCategories.length > 0
                         ? {
-                              upsert: await Promise.all(
-                                  body.ticketCategories.map(async (category) => {
-                                      const existingCategory = await prisma.ticketCategory.findFirst({
-                                          where: { matchId: Number(matchId), category: category.category },
-                                      });
-                                      return {
-                                          where: { id: existingCategory ? existingCategory.id : -1 },
-                                          update: {
-                                              price: category.price,
-                                              ticketsAvailable: category.ticketsAvailable,
-                                              gate: category.gate,
-                                          },
-                                          create: {
-                                              category: category.category as TicketCategoryEnum,
-                                              price: category.price,
-                                              ticketsAvailable: category.ticketsAvailable,
-                                              gate: category.gate,
-                                          },
-                                      };
-                                  })
-                              ),
-                          }
+                            upsert: await Promise.all(
+                                body.ticketCategories.map(async (category) => {
+                                    const existingCategory = await prisma.ticketCategory.findFirst({
+                                        where: { matchId: Number(matchId), category: category.category },
+                                    });
+                                    return {
+                                        where: { id: existingCategory ? existingCategory.id : -1 },
+                                        update: {
+                                            price: category.price,
+                                            ticketsAvailable: category.ticketsAvailable,
+                                            gate: category.gate,
+                                        },
+                                        create: {
+                                            category: category.category as TicketCategoryEnum,
+                                            price: category.price,
+                                            ticketsAvailable: category.ticketsAvailable,
+                                            gate: category.gate,
+                                        },
+                                    };
+                                }),
+                            ),
+                        }
                         : undefined,
             },
             include: {

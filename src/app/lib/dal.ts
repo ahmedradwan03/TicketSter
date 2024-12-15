@@ -22,5 +22,6 @@ export const getUser = cache(async () => {
             id: session.id,
         },
     });
-    return user;
+
+    return user ? user : null;
 });

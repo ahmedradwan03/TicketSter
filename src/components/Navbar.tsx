@@ -49,11 +49,11 @@ export default function Navbar({ user }: { user: UserDTO | null }) {
                                 </Link>
                             </li>
                         ))}
+                        <Link href={'/matches'} className="py-2 px-3 text-gray-900 rounded flex items-center group">
+                            <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Matches</span>
+                        </Link>
                         {user ? (
                             <div className="flex">
-                                <Link href={'/matches'} className="py-2 px-3 text-gray-900 rounded flex items-center group">
-                                    <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Matches</span>
-                                </Link>
                                 {user.role === 'ADMIN' ? (
                                     <Link href={'/dashboard'} className="py-2 px-3 text-gray-900 rounded flex items-center group">
                                         <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Dashboard</span>

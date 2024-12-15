@@ -21,6 +21,10 @@ export const getAllMatches = async () => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches`, { method: 'GET' });
     return { success, matches: success ? data.matches : [], message: message || 'Failed to fetch matches.' };
 };
+export const getMatch = async (matchId:number) => {
+    const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches/${matchId}`, { method: 'GET' });
+    return { success, match: success ? data.match : [], message: message || 'Failed to fetch match.' };
+};
 
 export const createMatch = async (matchData: matchdto) => {
     const { success, data, message } = await fetcher(`${API_BASE_URL}/api/matches`, {

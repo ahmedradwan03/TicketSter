@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { MatchDto } from '@/app/lib/dtos';
+import Link from 'next/link';
 
 const MatchCard = ({ match }: { match: MatchDto }) => {
     return (
@@ -57,21 +58,11 @@ const MatchCard = ({ match }: { match: MatchDto }) => {
             </div>
 
             <div className="flex flex-col items-center">
-                <button
-                    className={`px-6 py-2 rounded-lg text-sm font-semibold ${
-                        match.ticketCategories.length > 0 ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                    }`}
-                    disabled={match.ticketCategories.length === 0}
-                >
-                    {match.ticketCategories.length > 0 ? 'Book Ticket' : 'Unavailable'}
-                </button>
-                <span
-                    className={`mt-2 text-sm font-medium ${
-                        match.ticketCategories.length > 0 ? 'text-green-500' : 'text-red-500'
-                    }`}
-                >
-                    {match.ticketCategories.length > 0 ? 'Available' : 'Sold Out'}
-                </span>
+                <Link
+                    href={`/booking/${match.id}`}
+                    className=" inline-block     bg-gradient-to-r from-green-600 to-blue-600    text-white font-semibold    py-3 px-6    rounded-lg shadow-md     transform hover:scale-105     hover:from-green-500 hover:to-blue-500     transition-all">
+                    Buy Ticket
+                </Link>
             </div>
         </div>
     );
