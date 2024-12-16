@@ -2,12 +2,8 @@
 
 import React, { useState } from 'react';
 import { MatchDto, TicketCategoryDto } from '@/app/lib/dtos';
-// import img from 'next/img';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from '@/components/bookingForm/CheckoutForm';
+import { createBooking } from '@/services/booking';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 interface BookingFormProps {
     match: MatchDto;
@@ -16,25 +12,27 @@ interface BookingFormProps {
 
 export default function BookingForm({ match, userId }: BookingFormProps) {
     const [selectedCategory, setSelectedCategory] = useState<TicketCategoryDto | null>(null);
-    const [payForm, setPayForm] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const handleBooking = async (e: React.FormEvent) => {
-        e.preventDefault();
+
+    const onClick = async () => {
 
         if (!selectedCategory) {
             setError('Please select a ticket category.');
             return;
         }
+        const response = await createBooking({ userId, matchId: match.id, categoryId: selectedCategory.id });
 
-        setLoading(true);
-        setPayForm(!payForm);
-        setError(null);
-
-        setTimeout(() => {
+        if (!response.success) {
             setLoading(false);
-        }, 2000);
+            setError(response.message);
+            return;
+        }
+        setLoading(false);
+        console.log(response);
+        console.log(response.session.url);
+        window.location.assign(response.session.url)
     };
 
     return (
@@ -95,54 +93,41 @@ export default function BookingForm({ match, userId }: BookingFormProps) {
                 </div>
             </div>
 
-            <form onSubmit={handleBooking}>
-                <div className="mb-8">
-                    <label className="block mb-3 text-lg font-semibold text-gray-800">Select Ticket Category:</label>
 
-                    <div className="space-x-4 overflow-x-auto flex justify-center items-center">
-                        {match.ticketCategories.map((category) => (
-                            <div
-                                key={category.category}
-                                className={`p-4 border rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:bg-gray-100 transition-all ${selectedCategory?.category === category.category ? 'bg-blue-100 border-blue-300' : 'bg-white'}`}
-                                onClick={() => setSelectedCategory(category)}
-                            >
-                                <span className="font-semibold text-gray-800 text-center">{category.category}</span>
-                                <span className="text-sm text-gray-500 text-center mt-2">Price: ${category.price}</span>
-                                {selectedCategory?.category === category.category && (
-                                    <span className="text-green-500 font-semibold mt-2">Selected</span>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+            <div className="mb-8">
+                <label className="block mb-3 text-lg font-semibold text-gray-800">Select Ticket Category:</label>
+
+                <div className="space-x-4 overflow-x-auto flex justify-center items-center">
+                    {match.ticketCategories.map((category) => (
+                        <div
+                            key={category.category}
+                            className={`p-4 border rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:bg-gray-100 transition-all ${selectedCategory?.category === category.category ? 'bg-blue-100 border-blue-300' : 'bg-white'}`}
+                            onClick={() => setSelectedCategory(category)}
+                        >
+                            <span className="font-semibold text-gray-800 text-center">{category.category}</span>
+                            <span className="text-sm text-gray-500 text-center mt-2">Price: ${category.price}</span>
+                            {selectedCategory?.category === category.category && (
+                                <span className="text-green-500 font-semibold mt-2">Selected</span>
+                            )}
+                        </div>
+                    ))}
                 </div>
+            </div>
 
-                {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-                <div className="text-center">
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className={`inline-block bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:from-green-500 hover:to-blue-500'}`}
-                    >
-                        {loading ? 'Booking...' : 'Book Now'}
-                    </button>
-                </div>
-            </form>
+            <div className="text-center">
+                <button
+                    type="submit"
+                    onClick={onClick}
+                    disabled={loading}
+                    className={`inline-block bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-all ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:from-green-500 hover:to-blue-500'}`}
+                >
+                    {loading ? 'Booking...' : 'Book Now'}
+                </button>
+            </div>
 
-            {payForm && selectedCategory && (
-                <div className="mt-8">
-                    <Elements
-                        stripe={stripePromise}
-                        options={{
-                            mode: 'payment',
-                            amount: Math.round(selectedCategory.price * 100),
-                            currency: 'usd',
-                        }}
-                    >
-                        <CheckoutForm ticketCategory={selectedCategory} userId={userId} matchId={match.id} />
-                    </Elements>
-                </div>
-            )}
+
         </div>
     );
 }
