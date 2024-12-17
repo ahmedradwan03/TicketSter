@@ -3,11 +3,8 @@ import React from 'react';
 const AboutPage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
-            
             <h1 className="text-4xl font-bold text-center mb-8 text-primary">About TicketSter</h1>
-            <p className="text-lg mb-6 text-center text-gray-600">
-                Welcome to TicketSter, your one-stop solution for booking tickets to the most exciting football matches around the globe!
-            </p>
+            <p className="text-lg mb-6 text-center text-gray-600">Welcome to TicketSter, your one-stop solution for booking tickets to the most exciting football matches around the globe!</p>
 
             <div className="mb-8 p-4 bg-gray-100 rounded-lg shadow-md">
                 <h2 className="text-3xl font-semibold mb-4 text-primary">Our Mission</h2>

@@ -1,5 +1,6 @@
 import prisma from '@/app/lib/database';
 import { StadiumDto } from '@/app/lib/dtos';
+import { handelValidationErrors } from '@/app/lib/handelValidationErrors';
 import { createStadiumSchema, updateStadiumSchema } from '@/app/lib/validationSchemas';
 import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
@@ -7,15 +8,10 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET() {
     try {
         const stadiums = await prisma.stadium.findMany({
-            include: {
-                team: true,
-                matches: true,
-            },
+            include: { team: true, matches: true },
         });
 
-        if (!stadiums || stadiums.length === 0) {
-            return NextResponse.json({ message: 'No stadiums found.' }, { status: 404 });
-        }
+        if (!stadiums || stadiums.length === 0) return NextResponse.json({ message: 'No stadiums found.' }, { status: 404 });
 
         return NextResponse.json({ stadiums, message: 'Stadiums retrieved successfully.' }, { status: 200 });
     } catch (error) {
@@ -31,16 +27,15 @@ export async function POST(req: NextRequest) {
     const body = (await req.json()) as StadiumDto;
     const validation = createStadiumSchema.safeParse(body);
 
-    if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
+    if (!validation.success) {
+        const errorMessage = handelValidationErrors(validation);
+        return NextResponse.json({ message: errorMessage }, { status: 400 });
+    }
+
     try {
+        const existingStadium = await prisma.stadium.findFirst({ where: { name: body.name } });
 
-        const existingStadium = await prisma.stadium.findFirst({
-            where: { name: body.name },
-        });
-
-        if (existingStadium) {
-            return NextResponse.json({ message: 'A stadium with this name already exists.' }, { status: 400 });
-        }
+        if (existingStadium) return NextResponse.json({ message: 'A stadium with this name already exists.' }, { status: 400 });
 
         const newStadium = await prisma.stadium.create({
             data: {
@@ -64,15 +59,14 @@ export async function PATCH(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
-    if (!id) {
-        return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
-    }
+    if (!id) return NextResponse.json({ message: 'Stadium ID is required' }, { status: 400 });
 
     const body = (await req.json()) as StadiumDto;
     const validation = updateStadiumSchema.safeParse(body);
 
     if (!validation.success) {
-        return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
+        const errorMessage = handelValidationErrors(validation); 
+        return NextResponse.json({ message: errorMessage }, { status: 400 });
     }
 
     try {

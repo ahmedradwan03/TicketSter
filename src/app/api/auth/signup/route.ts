@@ -21,21 +21,13 @@ export async function POST(req: NextRequest) {
         const hashedPassword = await bcrypt.hash(body.password, 12);
 
         const newUser = await prisma.user.create({
-            data: {
-                name: body.name,
-                email: body.email,
-                password: hashedPassword,
-            },
-            select: {
-                id: true,
-                name: true,
-                role: true,
-            },
+            data: { name: body.name, email: body.email, password: hashedPassword },
+            select: { id: true, name: true, role: true },
         });
 
         await createSession({ id: newUser.id, name: newUser.name, role: newUser.role });
 
-        return NextResponse.json({ newUser, message: 'Registered successfully' }, { status: 201 });
+        return NextResponse.json({ user: newUser, message: 'Registered successfully' }, { status: 201 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'internal server error' }, { status: 500 });

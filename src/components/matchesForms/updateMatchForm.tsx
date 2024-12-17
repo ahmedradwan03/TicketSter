@@ -43,7 +43,7 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
         ],
     });
 
-    const [error, setError] = useState<any>({});
+    const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -55,7 +55,7 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
         }));
     };
 
-    const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+    const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
 
     const handleTicketChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -68,23 +68,18 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
         setFormData({ ...formData, ticketCategories: updatedTicketCategories });
     };
 
-    // Handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formData);
 
-        if (formData.team1Id === formData.team2Id) {
-            setError({ team2Id: 'Team 1 and Team 2 cannot be the same.' });
-            return;
-        }
         const response = await updateMatch(match.id, formData);
         if (!response.success) {
             console.log(response.message);
-            setError({ global: response.message || 'Failed to update match.' });
+            setError(response.message || 'Failed to update match.');
             return;
         }
-
-        router.replace('/matches');
+        setIsFormOpen(false);
+        router.refresh();
     };
 
     const handleDeleteMatch = async () => {
@@ -93,13 +88,13 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
             setError(response.message || 'Failed to delete match.');
             return;
         }
-        router.replace('/matches');
+        setIsFormOpen(false);
+        router.refresh();
     };
 
     return (
         <div className="bg-white p-4 rounded shadow ">
             <div className="flex items-center mb-4">
-
                 <span className="mr-2">
                     <Image src={match.team1.image} alt={match.team1.name} width={50} height={50} />
                 </span>
@@ -110,22 +105,21 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                 </span>
                 <h3 className="text-xl font-bold ml-2">{match.team2.name}</h3>
             </div>
-            <div className="mb-5"> <h2>{match.name}</h2></div>
+            <div className="mb-5">
+                {' '}
+                <h2>{match.name}</h2>
+            </div>
             <div>
-                <button onClick={() => setIsFormVisible((prev) => !prev)} className="p-2 bg-primary text-white rounded">
-                    {isFormVisible ? 'Close' : 'Update Match'}
+                <button onClick={() => setIsFormOpen((prev) => !prev)} className="p-2 bg-primary text-white rounded">
+                    {isFormOpen ? 'Close' : 'Update Match'}
                 </button>
-                {isFormVisible && (
+                {isFormOpen && (
                     <form onSubmit={handleSubmit}>
-                        {/* Match Name */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <div>
                                 <label className="block text-gray-700">Match Name:</label>
-                                <input type="text" name="name" value={formData.name} onChange={handleChange}
-                                       className="w-full border rounded p-2" />
+                                <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full border rounded p-2" />
                             </div>
-
-                            {/* Match Date */}
                             <div>
                                 <label className="block text-gray-700">Match Date:</label>
                                 <input
@@ -136,11 +130,9 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                     className="w-full border rounded p-2"
                                 />
                             </div>
-                            {/* Teams Dropdown */}
                             <div>
                                 <label className="block text-gray-700">Team 1:</label>
-                                <select name="team1Id" value={formData.team1Id} onChange={handleChange}
-                                        className="w-full border rounded p-2">
+                                <select name="team1Id" value={formData.team1Id} onChange={handleChange} className="w-full border rounded p-2">
                                     <option value="">Select a team</option>
                                     {teams.map((team) => (
                                         <option key={team.id} value={team.id}>
@@ -149,11 +141,9 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                     ))}
                                 </select>
                             </div>
-
                             <div>
                                 <label className="block text-gray-700">Team 2:</label>
-                                <select name="team2Id" value={formData.team2Id} onChange={handleChange}
-                                        className="w-full border rounded p-2">
+                                <select name="team2Id" value={formData.team2Id} onChange={handleChange} className="w-full border rounded p-2">
                                     <option value="">Select a team</option>
                                     {teams.map((team) => (
                                         <option key={team.id} value={team.id}>
@@ -162,12 +152,9 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                     ))}
                                 </select>
                             </div>
-
-                            {/* Stadium Dropdown */}
                             <div>
                                 <label className="block text-gray-700">Stadium:</label>
-                                <select name="stadiumId" value={formData.stadiumId} onChange={handleChange}
-                                        className="w-full border rounded p-2">
+                                <select name="stadiumId" value={formData.stadiumId} onChange={handleChange} className="w-full border rounded p-2">
                                     <option value="">Select a stadium</option>
                                     {stadiums.map((stadium) => (
                                         <option key={stadium.id} value={stadium.id}>
@@ -176,7 +163,6 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                     ))}
                                 </select>
                             </div>
-
                             <div className="flex justify-start items-center px-2">
                                 <label className="flex gap-2">
                                     <input
@@ -190,7 +176,6 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                 </label>
                             </div>
                         </div>
-                        {/* Ticket Categories */}
                         <div>
                             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Ticket Categories</h2>
                             {formData.ticketCategories.map((category, index) => (
@@ -237,17 +222,12 @@ const UpdateMatchForm: React.FC<UpdateMatchFormProps> = ({ match, teams, stadium
                                 </div>
                             ))}
                         </div>
-
-                        {/* Submit Button */}
-                        {error && <div className="text-red-500 text-center text-sm mb-4">{error.global}</div>}
-
+                        {error && <div className="text-red-500 text-center text-sm mb-4">{error}</div>}
                         <div className="flex justify-around">
-                            <button type="submit"
-                                    className="p-3 bg-primary w-[20%] text-white font-semibold rounded-lg transition duration-300">
+                            <button type="submit" className="p-3 bg-primary w-[20%] text-white font-semibold rounded-lg transition duration-300">
                                 Update Match
                             </button>
-                            <button type="button" onClick={handleDeleteMatch}
-                                    className="p-3 bg-red-950 w-[20%] text-white font-semibold rounded-lg transition duration-300">
+                            <button type="button" onClick={handleDeleteMatch} className="p-3 bg-red-950 w-[20%] text-white font-semibold rounded-lg transition duration-300">
                                 Delete Match
                             </button>
                         </div>

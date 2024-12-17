@@ -1,13 +1,11 @@
 import React from 'react';
 import { getAllStadiums } from '@/services/stadiums';
-import CreateTeamForm from '@/components/teamsForms/createTeamForm';
+import CreateTeamForm from '@/components/TeamsForms/CreateTeamForm';
 import { getAllTeams } from '@/services/teams';
-import UpdateTeamForm from '@/components/teamsForms/updateTeamForm';
+import UpdateTeamForm from '@/components/TeamsForms/UpdateTeamForm';
 import { TeamDto } from '@/app/lib/dtos';
 
-
 export default async function Teams() {
-
     const stadiumsResponse = await getAllStadiums();
     const teamsResponse = await getAllTeams();
 
@@ -20,4 +18,3 @@ export default async function Teams() {
         </div>
     );
 }
-

@@ -4,20 +4,25 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { UserDTO } from '@/app/lib/dtos';
+import { logout } from '@/services/auth';
 
-export default function Navbar({ user }: { user: UserDTO | null }) {
+export default function Navbar({ user }: { user: UserDTO }) {
     const router = useRouter();
 
+    const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
+
+    const handleLogout = async () => {
+        setLoading(true);
+        const response = await logout();
+        if (response.success) {
+            router.push('/login');
+            router.refresh();
+            setLoading(false);
+        }
+        setLoading(false);
     };
 
-    const handleLogout = () => {
-        fetch('/api/auth/logout', { method: 'GET' })
-            .then((response) => response.ok && router.refresh() && router.push('/login'))
-            .catch(console.error);
-    };
     return (
         <nav className="bg-gray-50">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -25,7 +30,7 @@ export default function Navbar({ user }: { user: UserDTO | null }) {
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-primary">TicketSter</span>
                 </Link>
                 <button
-                    onClick={toggleMenu}
+                    onClick={() => setIsOpen(!isOpen)}
                     type="button"
                     className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                     aria-controls="navbar-default"
@@ -62,7 +67,7 @@ export default function Navbar({ user }: { user: UserDTO | null }) {
                                     <span className="ml-2 py-2 px-3 text-primary">{user?.name?.toUpperCase()} | </span>
                                 )}
 
-                                <button onClick={handleLogout} className="py-2 px-8 rounded-[50px] text-white bg-primary">
+                                <button disabled={loading} onClick={handleLogout} className="py-2 px-8 rounded-[50px] text-white bg-primary">
                                     Logout
                                 </button>
                             </div>

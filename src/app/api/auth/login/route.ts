@@ -4,12 +4,16 @@ import { loginSchema } from '@/app/lib/validationSchemas';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { createSession } from '@/app/lib/session';
+import { handelValidationErrors } from '@/app/lib/handelValidationErrors';
 
 export async function POST(req: NextRequest) {
     const body = (await req.json()) as LoginUserDto;
     const validation = loginSchema.safeParse(body);
 
-    if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
+    if (!validation.success) {
+        const errorMessage = handelValidationErrors(validation);
+        return NextResponse.json({ message: errorMessage }, { status: 400 });
+    }
 
     try {
         const user = await prisma.user.findUnique({ where: { email: body.email } });

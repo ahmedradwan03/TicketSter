@@ -4,7 +4,6 @@ import prisma from '@/app/lib/database';
 
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
-
     const response = await verifyAdmin();
     if (response) return response;
 
@@ -17,10 +16,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
         if (!user) return NextResponse.json({ message: 'User not found with this ID' }, { status: 404 });
 
-        const userUpdated = await prisma.user.update({
-            where: { id },
+        const userUpdated = await prisma.user.update({ where: { id },
             data: { role: user.role === 'USER' ? 'ADMIN' : 'USER' },
         });
+        
         return NextResponse.json({ userUpdated, message: `user become ${userUpdated.role} successfully.` }, { status: 200 });
 
     } catch (error) {

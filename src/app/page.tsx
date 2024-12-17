@@ -1,5 +1,5 @@
-import Hero from '@/components/Hero';
-import HomeMatches from '../components/HomeMatches';
+import Hero from '@/components/Hero/Hero';
+import HomeMatches from '../components/HomeMatches/HomeMatches';
 import { getAllMatches } from '@/services/matches';
 
 export default async function Home() {

@@ -10,7 +10,7 @@ export const fetcher = async (url: string, options: RequestInit) => {
         }
 
         const data = await response.json();
-        return { success: true, data};
+        return { success: true, data };
     } catch (error) {
         if (error instanceof Error) return { success: false, message: error.message };
         return { success: false, message: 'An unknown error occurred.' };

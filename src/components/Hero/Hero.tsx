@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
 const Hero: React.FC = () => {
-
     return (
         <div className="relative w-full h-[400px] overflow-hidden">
             <Image src="/hero.jpg" alt="Hero Image" layout="fill" objectFit="cover" className="absolute inset-0" />

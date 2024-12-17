@@ -3,6 +3,7 @@ import { createTeamSchema } from '@/app/lib/validationSchemas';
 import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
 import { TeamDto } from '@/app/lib/dtos';
+import { handelValidationErrors } from '@/app/lib/handelValidationErrors';
 
 export async function GET() {
     try {
@@ -14,9 +15,7 @@ export async function GET() {
             },
         });
 
-        if (!teams || teams.length === 0) {
-            return NextResponse.json({ message: 'No teams found.' }, { status: 404 });
-        }
+        if (!teams || teams.length === 0) return NextResponse.json({ message: 'No teams found.' }, { status: 404 });
 
         return NextResponse.json({ teams, message: 'Teams retrieved successfully.' }, { status: 200 });
     } catch (error) {
@@ -29,17 +28,15 @@ export async function POST(req: NextRequest) {
     const response = await verifyAdmin();
     if (response) return response;
 
-    const body = await req.json() as TeamDto;
+    const body = (await req.json()) as TeamDto;
 
     const validation = createTeamSchema.safeParse(body);
-
     if (!validation.success) {
-        return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
+        const errorMessage = handelValidationErrors(validation);
+        return NextResponse.json({ message: errorMessage }, { status: 400 });
     }
 
     try {
-
-
         const team = await prisma.team.create({
             data: {
                 name: body.name,
@@ -49,9 +46,7 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        if (!team) {
-            return NextResponse.json({ message: 'Unable to create the team.' }, { status: 404 });
-        }
+        if (!team) return NextResponse.json({ message: 'Unable to create the team.' }, { status: 404 });
 
         return NextResponse.json({ team, message: 'Team created successfully.' }, { status: 201 });
     } catch (error) {

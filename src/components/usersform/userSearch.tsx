@@ -54,30 +54,20 @@ const UserSearch = () => {
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                 />
-                <button
-                    type="submit"
-                    className="mt-3 p-2 w-full rounded bg-primary text-white "
-                >
+                <button type="submit" className="mt-3 p-2 w-full rounded bg-primary text-white ">
                     Search
                 </button>
             </form>
-
             {error && <p className="text-red-500">{error}</p>}
-
             {user && (
                 <div className="p-6 border border-gray-300 rounded-lg bg-white shadow-lg">
                     {/* Header Section */}
                     <div className="flex items-center justify-between mb-5">
                         <h2 className="text-3xl font-bold text-gray-800">User Details</h2>
-                        <span
-                            className={`px-3 py-1 text-sm font-semibold rounded-full ${
-                                user.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                            }`}
-                        >
+                        <span className={`px-3 py-1 text-sm font-semibold rounded-full ${user.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                             {user.active ? 'Active' : 'Inactive'}
                         </span>
                     </div>
-
                     <div className="space-y-3 text-gray-700">
                         <p className="flex items-center">
                             <span className="font-semibold w-1/4">ID:</span>
@@ -96,27 +86,15 @@ const UserSearch = () => {
                             <span className="uppercase text-blue-600 font-medium">{user.role}</span>
                         </p>
                     </div>
-
                     <div className="flex justify-end mt-6 gap-3">
-                        <button
-                            onClick={handleMakeAdmin}
-                            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow  transition-all"
-                        >
+                        <button onClick={handleMakeAdmin} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg shadow  transition-all">
                             {user.role === 'ADMIN' ? 'Remove Admin' : 'Make Admin'}
                         </button>
-                        <button
-                            onClick={handleDeactivateUser}
-                            className="flex items-center gap-2 px-4 py-2 bg-red-950 text-white rounded-lg shadow hover:bg-red-700 transition-all"
-                        >
+                        <button onClick={handleDeactivateUser} className="flex items-center gap-2 px-4 py-2 bg-red-950 text-white rounded-lg shadow hover:bg-red-700 transition-all">
                             {user.active ? 'Deactivate User' : 'Activate User'}
                         </button>
                     </div>
-
-                    {actionMessage && (
-                        <div className="mt-4 p-3 text-sm text-center font-medium rounded-lg bg-red-100 text-red-700">
-                            {actionMessage}
-                        </div>
-                    )}
+                    {actionMessage && <div className="mt-4 p-3 text-sm text-center font-medium rounded-lg bg-red-100 text-red-700">{actionMessage}</div>}
                 </div>
             )}
         </div>

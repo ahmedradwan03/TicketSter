@@ -1,4 +1,4 @@
-import MatchCard from '../../components/MatchCard';
+import MatchCard from '../../components/MatchCard/MatchCard';
 import { MatchDto } from '../lib/dtos';
 import { getAllMatches } from '@/services/matches';
 

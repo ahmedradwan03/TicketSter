@@ -6,11 +6,7 @@ export const getAllTeams = async () => {
         method: 'GET',
     });
 
-    return {
-        success,
-        teams: success ? data.teams : [],
-        message: message || 'Failed to fetch teams.',
-    };
+    return { success, teams: success ? data.teams : [], message: message || 'Failed to fetch teams.' };
 };
 
 export const createTeam = async (teamData: TeamDto) => {
@@ -20,11 +16,7 @@ export const createTeam = async (teamData: TeamDto) => {
         body: JSON.stringify(teamData),
     });
 
-    return {
-        success,
-        team: success ? data.team : null,
-        message: message || 'Failed to create team.',
-    };
+    return { success, team: success ? data.team : null, message: message || 'Failed to create team.' };
 };
 
 export const updateTeam = async (teamId: number, updatedData: TeamDto) => {
@@ -34,11 +26,7 @@ export const updateTeam = async (teamId: number, updatedData: TeamDto) => {
         body: JSON.stringify(updatedData),
     });
 
-    return {
-        success,
-        team: success ? data.team : null,
-        message: message || 'Failed to update team.',
-    };
+    return { success, team: success ? data.team : null, message: message || 'Failed to update team.' };
 };
 
 export const deleteTeam = async (teamId: number) => {
@@ -46,8 +34,5 @@ export const deleteTeam = async (teamId: number) => {
         method: 'DELETE',
     });
 
-    return {
-        success,
-        message: message || data.message || 'Failed to delete team.',
-    };
+    return { success, message: message || data.message || 'Failed to delete team.' };
 };

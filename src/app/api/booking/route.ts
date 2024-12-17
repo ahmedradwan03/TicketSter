@@ -13,12 +13,9 @@ export async function POST(req: NextRequest) {
     if (!validation.success) return NextResponse.json({ message: "You can't book right now" }, { status: 400 });
 
     const { matchId, categoryId, userId } = body;
-    console.log({ matchId, categoryId, userId });
 
     try {
-        const existingBooking = await prisma.booking.findFirst({
-            where: { userId, matchId },
-        });
+        const existingBooking = await prisma.booking.findFirst({ where: { userId, matchId } });
 
         if (existingBooking) return NextResponse.json({ message: 'You already have a booking for this match' }, { status: 400 });
 
@@ -53,6 +50,7 @@ export async function POST(req: NextRequest) {
             cancel_url: `${process.env.SITE_DOMAIN}`,
             metadata: { matchId, userId, categoryId },
         });
+        
         return NextResponse.json({ url: session.url, message: 'Session created successfully.' });
     } catch (error) {
         console.error('Error creating booking:', error);

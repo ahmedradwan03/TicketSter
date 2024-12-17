@@ -1,5 +1,6 @@
 import prisma from '@/app/lib/database';
 import { TeamDto } from '@/app/lib/dtos';
+import { handelValidationErrors } from '@/app/lib/handelValidationErrors';
 import { updateTeamSchema } from '@/app/lib/validationSchemas';
 import { verifyAdmin } from '@/app/lib/verifyAdmin';
 import { NextRequest, NextResponse } from 'next/server';
@@ -14,12 +15,12 @@ export async function PATCH(req: NextRequest) {
     const body = (await req.json()) as TeamDto;
     const validation = updateTeamSchema.safeParse(body);
 
-    if (!validation.success) return NextResponse.json({ message: validation.error.flatten().fieldErrors }, { status: 400 });
-
+    if (!validation.success) {
+        const errorMessage = handelValidationErrors(validation);
+        return NextResponse.json({ message: errorMessage }, { status: 400 });
+    }
     try {
-        const team = await prisma.team.findUnique({
-            where: { id: Number(id) },
-        });
+        const team = await prisma.team.findUnique({ where: { id: Number(id) } });
 
         if (!team) return NextResponse.json({ message: 'Team not found with this ID' }, { status: 404 });
         const updatedTeam = await prisma.team.update({
@@ -48,15 +49,12 @@ export async function DELETE(req: NextRequest) {
     if (!id) return NextResponse.json({ message: 'Team ID is required' }, { status: 400 });
 
     try {
-        const team = await prisma.team.findUnique({
-            where: { id: Number(id) },
-        });
+        const team = await prisma.team.findUnique({ where: { id: Number(id) } });
 
         if (!team) return NextResponse.json({ message: 'Team not found with this ID' }, { status: 404 });
 
-        await prisma.team.delete({
-            where: { id: Number(id) },
-        });
+        await prisma.team.delete({ where: { id: Number(id) } });
+        
         return NextResponse.json({ message: 'Team deleted successfully.' }, { status: 200 });
     } catch (error) {
         console.log('Error deleting team:', error);

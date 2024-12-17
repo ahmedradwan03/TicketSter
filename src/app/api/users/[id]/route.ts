@@ -8,21 +8,17 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     const id = Number(params.id);
 
-
     try {
         const user = await prisma.user.findUnique({
             where: { id },
             include: {
                 bookings: {
-                    include: {
-                        match: true,
-                    },
+                    include: { match: true },
                 },
             },
         });
 
         if (!user) return NextResponse.json({ message: `No user found with the provided ID (${id}).` }, { status: 404 });
-
 
         return NextResponse.json({ user, message: 'User retrieved successfully.' }, { status: 200 });
     } catch (error) {
@@ -32,7 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 message: 'An unexpected error occurred while retrieving the user.',
                 error: error instanceof Error ? error.message : 'Unknown error',
             },
-            { status: 500 },
+            { status: 500 }
         );
     }
 }
