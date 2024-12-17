@@ -17,10 +17,29 @@ export const verifySession = cache(async () => {
 export const getUser = cache(async () => {
     const session = await verifySession();
     if (!session || typeof session.id !== 'number') return null;
+
     const user = await prisma.user.findUnique({
-        where: {
-            id: session.id,
+        where: { id: session.id },
+        include: {
+            bookings: {
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                include: {
+                    match: {
+                        select: {
+                            date: true, stadium: { select: { name: true } },
+                            team1: { select: { name: true, image: true } },
+                            team2: { select: { name: true, image: true } },
+                        },
+                    }, category: {
+                        select: { category: true, price: true },
+                    },
+                },
+            },
         },
     });
+
+
     return user ? user : null;
 });

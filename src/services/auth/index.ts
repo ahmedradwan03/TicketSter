@@ -23,5 +23,5 @@ export const signup = async (formData: SignupUserDto) => {
 
 export const logout = async () => {
     const { success, message } = await fetcher(`${API_BASE_URL}/api/auth/logout`, { method: 'POST' });
-    return { success, message:success?message: 'Logout failed. Please try again.' };
+    return { success, message: success ? message : 'Logout failed. Please try again.' };
 };

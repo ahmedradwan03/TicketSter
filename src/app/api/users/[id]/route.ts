@@ -13,7 +13,22 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             where: { id },
             include: {
                 bookings: {
-                    include: { match: true },
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                    include: {
+                        match: {
+                            select: {
+                                date: true,
+                                stadium: { select: { name: true } },
+                                team1: { select: { name: true, image: true } },
+                                team2: { select: { name: true, image: true } },
+                            },
+                        },
+                        category: {
+                            select: { category: true, price: true },
+                        },
+                    },
                 },
             },
         });

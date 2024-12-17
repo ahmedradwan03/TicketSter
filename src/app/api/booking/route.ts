@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     const validation = createBooking.safeParse(body);
 
-    if (!validation.success) return NextResponse.json({ message: "You can't book right now" }, { status: 400 });
+    if (!validation.success) return NextResponse.json({ message: 'You can\'t book right now' }, { status: 400 });
 
     const { matchId, categoryId, userId } = body;
 
@@ -46,11 +46,11 @@ export async function POST(req: NextRequest) {
         const session = await stripe.checkout.sessions.create({
             line_items,
             mode: 'payment',
-            success_url: `${process.env.SITE_DOMAIN}`,
+            success_url: `${process.env.SITE_DOMAIN}/payment-success?price=${findTicketCategory.price}&team1=${encodeURIComponent(match.team1.name)}&team2=${encodeURIComponent(match.team2.name)}`,
             cancel_url: `${process.env.SITE_DOMAIN}`,
             metadata: { matchId, userId, categoryId },
         });
-        
+
         return NextResponse.json({ url: session.url, message: 'Session created successfully.' });
     } catch (error) {
         console.error('Error creating booking:', error);

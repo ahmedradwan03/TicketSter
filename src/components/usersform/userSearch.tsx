@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { UserDTO } from '@/app/lib/dtos';
 import { deactivateUser, getUserById, updateUserRoleToAdmin } from '@/services/users';
+import TicketCard from '@/components/TicketCard/TicketCard';
 
 const UserSearch = () => {
     const [searchText, setSearchText] = useState('');
@@ -97,8 +98,15 @@ const UserSearch = () => {
                     {actionMessage && <div className="mt-4 p-3 text-sm text-center font-medium rounded-lg bg-red-100 text-red-700">{actionMessage}</div>}
                 </div>
             )}
+            <div className="flex flex-col mt-6 gap-3">
+                <h1 className="text-3xl text-gray-500 text-center mb-5">User Tickets</h1>
+                {user?.bookings?.length ? (
+                    user.bookings.map((booking: any) => <TicketCard key={booking.id} booking={booking} />)
+                ) : (
+                    <p className="text-center text-gray-500 mt-4">No bookings found for this user.</p>
+                )}
+            </div>
         </div>
     );
 };
-
 export default UserSearch;

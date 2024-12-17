@@ -6,6 +6,7 @@ export interface UserDTO {
     email: string;
     role: string;
     active: boolean;
+    bookings?: BookingDto[];
 }
 
 export interface SignupUserDto {
@@ -26,9 +27,11 @@ export interface SessionPayload extends JWTPayload {
 }
 
 export interface BookingDto {
+    id?: number;
     userId: number;
     matchId: number;
     categoryId: number;
+
 }
 
 export interface StadiumDto {

@@ -64,9 +64,10 @@ export default function Navbar({ user }: { user: UserDTO }) {
                                         <span className="ml-2 text-primary hover:text-white hover:bg-primary rounded-full px-4 transition duration-300">Dashboard</span>
                                     </Link>
                                 ) : (
-                                    <span className="ml-2 py-2 px-3 text-primary">{user?.name?.toUpperCase()} | </span>
+                                    <Link href="/my-tickets" className="ml-2 py-2 px-3 text-primary">
+                                        <span>{user?.name?.toUpperCase()} | </span>
+                                    </Link>
                                 )}
-
                                 <button disabled={loading} onClick={handleLogout} className="py-2 px-8 rounded-[50px] text-white bg-primary">
                                     Logout
                                 </button>
