@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     const validation = createBooking.safeParse(body);
 
-    if (!validation.success) return NextResponse.json({ message: 'You can\'t book right now' }, { status: 400 });
+    if (!validation.success) return NextResponse.json({ message: "You can't book right now" }, { status: 400 });
 
     const { matchId, categoryId, userId } = body;
 
@@ -31,6 +31,8 @@ export async function POST(req: NextRequest) {
         if (!findTicketCategory) return NextResponse.json({ message: 'Ticket category not found.' }, { status: 404 });
 
         if (findTicketCategory.ticketsAvailable < 1) return NextResponse.json({ message: 'Not enough tickets available.' }, { status: 400 });
+
+        // io.emit('ticketsAvailable', { matchId, categoryId, ticketsAvailable: findTicketCategory.ticketsAvailable - 1 });
 
         const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [
             {

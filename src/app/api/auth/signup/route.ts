@@ -22,10 +22,10 @@ export async function POST(req: NextRequest) {
 
         const newUser = await prisma.user.create({
             data: { name: body.name, email: body.email, password: hashedPassword },
-            select: { id: true, name: true, role: true },
+            select: { id: true, name: true, role: true, active: true },
         });
 
-        await createSession({ id: newUser.id, name: newUser.name, role: newUser.role });
+        await createSession({ id: newUser.id, name: newUser.name, role: newUser.role, active: newUser.active });
 
         return NextResponse.json({ user: newUser, message: 'Registered successfully' }, { status: 201 });
     } catch (error) {

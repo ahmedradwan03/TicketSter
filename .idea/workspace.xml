@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e734f254-63bd-4a52-b19c-39c31de34591" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/my-tickets/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/payment-success/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/TicketCard/TicketCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/login/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/login/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(auth)/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(auth)/signup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/login/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/auth/signup/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/auth/signup/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/api/booking/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/booking/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/users/[id]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/users/[id]/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/dashboard/users/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/dashboard/users/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/lib/dal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/dal.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/lib/dtos.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/lib/dtos.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/bookingForm/bookingForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/bookingForm/bookingForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/auth/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/auth/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +151,10 @@
       <workItem from="1734431235807" duration="1074000" />
       <workItem from="1734433847503" duration="88000" />
       <workItem from="1734446546280" duration="3084000" />
-      <workItem from="1734456397067" duration="10667000" />
+      <workItem from="1734456397067" duration="11906000" />
+      <workItem from="1734519600045" duration="78000" />
+      <workItem from="1737398255936" duration="1000" />
+      <workItem from="1737889106132" duration="107000" />
     </task>
     <servers />
   </component>

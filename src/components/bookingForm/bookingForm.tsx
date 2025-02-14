@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MatchDto, TicketCategoryDto } from '@/app/lib/dtos';
 import { createBooking } from '@/services/booking';
 import Image from 'next/image';
+import { io } from 'socket.io-client';
 
 interface BookingFormProps {
     match: MatchDto;
@@ -14,14 +15,45 @@ export default function BookingForm({ match, userId }: BookingFormProps) {
     const [selectedCategory, setSelectedCategory] = useState<TicketCategoryDto | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [ticketsAvailable, setTicketsAvailable] = useState<number | null>(null);
+
+    const socket = io();
+    useEffect(() => {
+        const socket = io();
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            socket.on('ticketsAvailable', (data) => {
+                if (data.matchId === match.id && data.categoryId === selectedCategory?.id) {
+                    setTicketsAvailable(data.ticketsAvailable);
+                    if (data.ticketsAvailable < 1) {
+                        setError('Sorry, no tickets available for this category.');
+                    }
+                }
+            });
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [selectedCategory, match.id]);
 
     const onClick = async () => {
         setLoading(true);
 
         if (!selectedCategory) {
             setError('Please select a ticket category.');
+            setLoading(false);
             return;
         }
+
+        socket.emit('ticketsAvailable', { matchId: match.id, categoryId: selectedCategory.id, ticketsAvailable: match.ticketCategories[selectedCategory.id].ticketsAvailable });
+
+        if (ticketsAvailable && ticketsAvailable < 1) {
+            setError('Sorry, no tickets available for this category.');
+            setLoading(false);
+            return;
+        }
+
         const response = await createBooking({ userId, matchId: match.id, categoryId: selectedCategory.id });
 
         if (!response.success) {
@@ -84,10 +116,14 @@ export default function BookingForm({ match, userId }: BookingFormProps) {
                             className={`p-4 border rounded-lg shadow-md flex flex-col items-center cursor-pointer hover:bg-gray-100 transition-all ${
                                 selectedCategory?.category === category.category ? 'bg-blue-100 border-blue-300' : 'bg-white'
                             }`}
-                            onClick={() => setSelectedCategory(category)}
+                            onClick={() => {
+                                setSelectedCategory(category);
+                                setTicketsAvailable(category.ticketsAvailable);
+                            }}
                         >
                             <span className="font-semibold text-gray-800 text-center">{category.category}</span>
                             <span className="text-sm text-gray-500 text-center mt-2">Price: ${category.price}</span>
+                            <span className="text-sm text-gray-500 text-center mt-2">{category.ticketsAvailable}</span>
                             {selectedCategory?.category === category.category && <span className="text-green-500 font-semibold mt-2">Selected</span>}
                         </div>
                     ))}
